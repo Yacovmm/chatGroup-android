@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.yacov.flashchatnewfirebase.controller.ChatListAdapter;
 import com.yacov.flashchatnewfirebase.model.InstantMessage;
 
 
@@ -24,6 +25,7 @@ public class MainChatActivity extends AppCompatActivity {
     private ImageButton mSendButton;
 
     private DatabaseReference mDatabaseReference;
+    private ChatListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +73,7 @@ public class MainChatActivity extends AppCompatActivity {
 
     private void sendMessage() {
 
-        // TODO: Grab the text the user typed in and push the message to Firebase
+        //Grab the text the user typed in and push the message to Firebase
         String input = mInputText.getText().toString();
         if (!input.equals("")){
             InstantMessage chat = new InstantMessage(input, mDisplayName);
@@ -81,15 +83,22 @@ public class MainChatActivity extends AppCompatActivity {
 
     }
 
-    // TODO: Override the onStart() lifecycle method. Setup the adapter here.
+    //Override the onStart() lifecycle method. Setup the adapter here.
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAdapter = new ChatListAdapter(this, mDatabaseReference, mDisplayName);
+        mChatListView.setAdapter(mAdapter);
+    }
 
     @Override
     public void onStop() {
         super.onStop();
 
-        // TODO: Remove the Firebase event listener on the adapter.
-
+        // Remove the Firebase event listener on the adapter.
+        mAdapter.cleanup();
     }
 
 }

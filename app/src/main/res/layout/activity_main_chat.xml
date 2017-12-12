@@ -38,7 +38,8 @@
             android:imeActionLabel="@string/action_send"
             android:imeOptions="actionUnspecified"
             android:inputType="textCapSentences|textAutoCorrect"
-            android:maxLines="1"
+            android:maxLines="5"
+            android:lines="5"
             android:gravity="center_horizontal"/>
 
         <ImageButton
