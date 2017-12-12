@@ -15,6 +15,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,7 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     public static final String CHAT_PREFS = "ChatPrefs";
     public static final String DISPLAY_NAME_KEY = "username";
 
-    // TODO: Add member variables here:
+    // Add member variables here:
     // UI references.
     private AutoCompleteTextView mEmailView;
     private AutoCompleteTextView mUsernameView;
@@ -63,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: Get hold of an instance of FirebaseAuth
+        //Get hold of an instance of FirebaseAuth
         mAuth = FirebaseAuth.getInstance();
 
 
@@ -138,10 +139,11 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.d("FlashChat", "createUser onComplete: " + task.isSuccessful());
 
                 if (!task.isSuccessful()){
-                    Log.d("FlashChat", "user creation failed");
-                    showErrorDialog("Registration attempt failed");
+                    Log.d("FlashChat", "user creation failed " + task.getException());
+                    showErrorDialog("Registration attempt failed" );
                 }else {
                     saveDisplayName();
+                    Toast.makeText(getApplicationContext(), "Registered successfuled", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     finish();
                     startActivity(intent);
